@@ -14,50 +14,91 @@ struct TaskDetailView: View {
     @State private var showEditView = false
 
     var priorityColor: Color {
-        
         switch task.priority {
-        case "High": return .red
-        case "Medium": return .yellow
-        case "Low": return .green
-        default: return .gray
+        case "High":
+            return Color.red
+        case "Medium":
+            return Color.yellow
+        case "Low":
+            return Color.green
+        default:
+            return Color.blue
         }
     }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                Rectangle()
+                //Priority Banner
+                RoundedRectangle(cornerRadius: 12)
                     .fill(priorityColor)
-                    .frame(width: 280, height: 50)
+                    .frame(width: 300, height: 50)
+                    .shadow(radius: 5)
                     .overlay {
                         Text(task.priority ?? "No Priority")
                             .font(.title3)
                             .foregroundColor(.white)
                             .bold()
                     }
+                    .padding(.top, 20)
 
-                VStack(alignment: .leading){
-                    Text("Title:")
-                        .font(.title)
-                        .bold()
-                    Text(task.title ?? "No Title")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .padding(.vertical,5)
-                    
-                    Text("Description:")
-                        .font(.title)
-                        .bold()
-                    
-                    Text(task.desc ?? "No Description")
-                        .font(.body)
-                        .foregroundColor(.secondary)
-                        .padding(.vertical,5)
+                VStack(alignment: .leading, spacing: 15) {
+                    // Title Section
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Title")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Text(task.title ?? "No Title")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                    }
+
+                    //  Description Section
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Description")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Text(task.desc ?? "No Description")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                    }
+
+                    // Due Date Section
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Due Date")
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                        Text(task.dueDate?.formatted(date: .abbreviated, time: .omitted) ?? "No Due Date")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(RoundedRectangle(cornerRadius: 10).fill(Color(.systemGray6)))
+                    }
                 }
-                Button("Edit Task") {
-                    showEditView = true
+                .padding(.horizontal)
+
+                // Edit Button
+                Button(action: { showEditView = true }) {
+                    ZStack {
+                        Text("Edit Task")
+                            .font(.headline)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
+                            .shadow(radius: 3)
+                    }
                 }
-                .buttonStyle(.borderedProminent)
+                .padding(.horizontal)
+                .padding(.top, 10)
 
                 Spacer()
             }
@@ -65,8 +106,10 @@ struct TaskDetailView: View {
             .navigationTitle("Task Details")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") {
-                        dismiss()
+                    Button(action: { dismiss() }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .font(.title2)
+                            .foregroundColor(.gray)
                     }
                 }
             }
@@ -77,6 +120,7 @@ struct TaskDetailView: View {
     }
 }
 
+// ✅ Mock Preview
 #Preview {
     let context = PersistenceController.shared.container.viewContext
     let mockTask = TaskEntity(context: context)
@@ -89,3 +133,4 @@ struct TaskDetailView: View {
     return TaskDetailView(task: mockTask)
         .environment(\.managedObjectContext, context)
 }
+
