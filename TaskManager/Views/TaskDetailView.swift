@@ -25,19 +25,34 @@ struct TaskDetailView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
-                Circle()
+                Rectangle()
                     .fill(priorityColor)
-                    .frame(width: 50, height: 50)
+                    .frame(width: 280, height: 50)
+                    .overlay {
+                        Text(task.priority ?? "No Priority")
+                            .font(.title3)
+                            .foregroundColor(.white)
+                            .bold()
+                    }
 
-                Text(task.title ?? "No Title")
-                    .font(.title)
-                    .bold()
-
-                Text(task.desc ?? "No Description")
-                    .font(.body)
-                    .foregroundColor(.secondary)
-                    .padding()
-
+                VStack(alignment: .leading){
+                    Text("Title:")
+                        .font(.title)
+                        .bold()
+                    Text(task.title ?? "No Title")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .padding(.vertical,5)
+                    
+                    Text("Description:")
+                        .font(.title)
+                        .bold()
+                    
+                    Text(task.desc ?? "No Description")
+                        .font(.body)
+                        .foregroundColor(.secondary)
+                        .padding(.vertical,5)
+                }
                 Button("Edit Task") {
                     showEditView = true
                 }
