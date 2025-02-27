@@ -17,7 +17,8 @@ struct SettingsView: View {
         ("Red", .red),
         ("Green", .green),
         ("Orange", .orange),
-        ("Purple", .purple)
+        ("Purple", .purple),
+        ("Yellow", .yellow)
     ]
 
     var body: some View {

@@ -75,3 +75,16 @@ struct EditTaskView: View {
         }
     }
 }
+
+#Preview {
+    let context = PersistenceController.shared.container.viewContext
+    let mockTask = TaskEntity(context: context)
+    mockTask.title = "Sample Task"
+    mockTask.desc = "This is a sample task description."
+    mockTask.priority = "High"
+    mockTask.isCompleted = false
+    mockTask.dueDate = Date()
+
+    return EditTaskView(task: mockTask)
+        .environment(\.managedObjectContext, context)
+}

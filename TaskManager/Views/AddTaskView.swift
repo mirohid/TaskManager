@@ -55,8 +55,6 @@ struct AddTaskView: View {
     }
 
     private func addTask() {
-        guard !title.isEmpty else { return }
-        
         let newTask = TaskEntity(context: viewContext)
         newTask.id = UUID()
         newTask.title = title
@@ -77,4 +75,8 @@ struct AddTaskView: View {
             print("Error saving task: \(error.localizedDescription)")
         }
     }
+}
+
+#Preview {
+    AddTaskView()
 }

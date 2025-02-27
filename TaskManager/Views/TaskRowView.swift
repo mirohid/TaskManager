@@ -70,3 +70,14 @@ struct TaskRowView: View {
         }
     }
 }
+#Preview {
+    let context = PersistenceController.shared.container.viewContext
+    let mockTask = TaskEntity(context: context)
+    mockTask.title = "Sample Task"
+    mockTask.desc = "This is a sample task description."
+    mockTask.priority = "High"
+    mockTask.isCompleted = false
+
+    return TaskRowView(task: mockTask)
+        .environment(\.managedObjectContext, context)
+}

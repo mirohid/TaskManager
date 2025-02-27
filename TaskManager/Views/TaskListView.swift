@@ -18,10 +18,10 @@ struct TaskListView: View {
     @State private var showAddTaskView = false
     @State private var selectedTask: TaskEntity?
     @State private var filterStatus = "All"
-    @State private var sortOrder = "Due Date"
+    @State private var sortOrder = "Title"
 
     let filterOptions = ["All", "Completed", "Pending"]
-    let sortOptions = ["Due Date", "Priority", "Title"]
+    let sortOptions =  ["Due Date", "Priority", "Title"]
 
     var filteredTasks: [TaskEntity] {
         tasks.filter { task in
@@ -135,4 +135,8 @@ struct TaskListView: View {
         default: return 0
         }
     }
+}
+
+#Preview {
+    TaskListView()
 }
